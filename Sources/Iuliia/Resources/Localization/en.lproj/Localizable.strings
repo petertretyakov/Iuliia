@@ -1,0 +1,37 @@
+/* 
+  Localizable.strings
+  Iuliia
+
+  Created by Peter Tretyakov on 16.07.2020.
+  
+*/
+
+// MARK: - Schemas
+
+"ala_lc_alt" = "ALA-LC Alt.";
+"ala_lc" = "ALA-LC";
+"bgn_pcgn_alt" = "BGN/PCGN Alt.";
+"bgn_pcgn" = "BGN/PCGN";
+"bs_2979_alt" = "BS 2979:1958 Alt.";
+"bs_2979" = "BS 2979:1958";
+"gost_779_alt" = "ISO 9:1995/GOST 7.79-2000 Alt.";
+"gost_779" = "ISO 9:1995/GOST 7.79-2000";
+"gost_7034" = "GOST R 7.0.34-2014";
+"gost_16876_alt" = "GOST 16876-71 Alt.";
+"gost_16876" = "GOST 16876-71";
+"gost_52290" = "GOST R 52290-2004";
+"gost_52535" = "GOST R 52535.1-2006";
+"icao_doc_9303" = "ICAO DOC 9303";
+"iso_9_1954" = "ISO/R 9:1954";
+"iso_9_1968_alt" = "ISO/R 9:1968 Alt.";
+"iso_9_1968" = "ISO/R 9:1968";
+"mosmetro" = "Moscow Metro Map";
+"mvd_310_fr" = "MVD 310-1997 (French)";
+"mvd_310" = "MVD 310-1997";
+"mvd_782" = "MVD 782-2000";
+"scientific" = "Scientific";
+"telegram" = "Telegram";
+"ungegn_1987" = "UNGEGN 1987 V/18";
+"wikipedia" = "Wikipedia";
+"yandex_maps" = "Yandex Maps";
+"yandex_money" = "Yandex Money";

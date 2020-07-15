@@ -37,6 +37,24 @@ public struct Schema: Decodable {
         case wikipedia = "wikipedia"
         case yandexMaps = "yandex_maps"
         case yandexMoney = "yandex_money"
+
+        public var isActual: Bool {
+            switch self {
+                case .alaLc, .alaLcAlt, .bgnPcgn, .bgnPcgnAlt, .bs2979, .bs2979Alt, .gost52290, .gost7034, .icaoDoc9303, .gost779,
+                     .gost779Alt, .ungegn1987, .mosmetro, .scientific, .telegram, .wikipedia, .yandexMaps, .yandexMoney:
+                    return true
+                case .gost16876, .gost16876Alt, .gost52535, .iso9_1954, .iso9_1968, .iso9_1968Alt, .mvd310, .mvd310Fr, .mvd782:
+                    return false
+            }
+        }
+
+        public var isDeprecated: Bool {
+            !isActual
+        }
+
+        public var title: String {
+            NSLocalizedString(rawValue, bundle: .module, comment: "")
+        }
     }
 
     public struct Sample {

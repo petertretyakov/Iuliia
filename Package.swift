@@ -4,6 +4,7 @@ import PackageDescription
 
 let package = Package(
     name: "Iuliia",
+    defaultLocalization: "en",
     products: [
         .library(name: "Iuliia", targets: ["Iuliia"]),
     ],
