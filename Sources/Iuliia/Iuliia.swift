@@ -15,16 +15,12 @@ public class Iuliia {
         self.schema = schema
     }
 
-    public convenience init(schema: Schema.Name) throws {
-        guard let url = Bundle.module.url(forResource: schema.rawValue, withExtension: "json") else {
-            throw IuliiaError.schemaFileNotFound(schema.rawValue + ".json")
+    public convenience init(name: Schema.Name) throws {
+        guard let url = Bundle.module.url(forResource: name.rawValue, withExtension: "json") else {
+            throw IuliiaError.schemaFileNotFound(name.rawValue + ".json")
         }
 
         try self.init(schemaURL: url)
-    }
-
-    public convenience init(destination: Destination) throws {
-        try self.init(schema: destination.schema)
     }
 
     public convenience init(schemaURL: URL) throws {
@@ -47,7 +43,7 @@ public class Iuliia {
         self.init(schema: schema)
     }
 
-    public func transliterate(_ string: String) -> String {
+    public func translate(_ string: String) -> String {
         let uppercased = string.filter { $0.isLetter }.allSatisfy { $0.isUppercase }
         let words = string
             .components(separatedBy: .whitespacesAndNewlines)

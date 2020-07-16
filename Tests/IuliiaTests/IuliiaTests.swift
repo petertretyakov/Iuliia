@@ -13,13 +13,22 @@ final class IuliiaTests: XCTestCase {
     func testSamples() throws {
         for name in Schema.Name.allCases {
             let iuliia = try Iuliia(schema: name)
-            for sample in iuliia.schema.samples {
+
+            let url = Bundle.module.url(forResource: name.rawValue, withExtension: "json")!
+            let data = try Data(contentsOf: url, options: .mappedIfSafe)
+            let decoder = JSONDecoder()
+            let samples = try decoder.decode(Samples.self, from: data)
+
+            for item in samples.items {
+                let result = iuliia.transliterate(item.source)
+
                 print("SCHEMA          : \(iuliia.schema.name)")
-                print("SOURCE          : \(sample.source)")
-                print("TRANSLITERATION : \(sample.transliteration)")
-                print("RESULT          : \(iuliia.transliterate(sample.source))")
+                print("SOURCE          : \(item.source)")
+                print("TRANSLITERATION : \(item.transliteration)")
+                print("RESULT          : \(result)")
                 print("-----------------")
-                XCTAssertTrue(iuliia.transliterate(sample.source) == sample.transliteration)
+
+                XCTAssertTrue(result == item.transliteration)
             }
         }
     }

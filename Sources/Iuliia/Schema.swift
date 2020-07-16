@@ -57,72 +57,41 @@ public struct Schema: Decodable {
         }
     }
 
-    public struct Sample {
-        let source: String
-        let transliteration: String
-    }
-
     public let name: String
-    public let schemaDescription: String?
-    public let url: URL?
-    public let aliases: [Name]?
-    public let comment: String?
     public let letters: [String: String]
     public let previous: [String: String]?
     public let next: [String: String]?
     public let ending: [String: String]?
-    public let samples: [Sample]
 
     public init(
         name: String = "Custom",
-        schemaDescription: String? = nil,
-        url: URL? = nil,
-        comment: String? = nil,
         letters: [String: String],
         previous: [String: String]? = nil,
         next: [String: String]? = nil,
-        ending: [String: String]? = nil,
-        samples: [Sample] = []
+        ending: [String: String]? = nil
     ) {
         self.name = name
-        self.schemaDescription = schemaDescription
-        self.url = url
-        self.aliases = nil
-        self.comment = comment
         self.letters = letters
         self.previous = previous
         self.next = next
         self.ending = ending
-        self.samples = samples
     }
 
-    internal enum CodingKeys: String, CodingKey {
+    private enum CodingKeys: String, CodingKey {
         case name = "name"
-        case description = "description"
-        case url = "url"
-        case aliases = "aliases"
-        case comment = "comments"
         case letters = "mapping"
         case previous = "prev_mapping"
         case next = "next_mapping"
         case ending = "ending_mapping"
-        case samples = "samples"
     }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        name = try container.decodeIfPresent(String.self, forKey: .name) ?? "Custom"
-        schemaDescription = try container.decodeIfPresent(String.self, forKey: .description)
-        url = try? container.decodeIfPresent(URL.self, forKey: .url)
-        aliases = (try container.decodeIfPresent([String].self, forKey: .aliases) ?? []).compactMap(Name.init)
-        comment = try container.decodeIfPresent([String].self, forKey: .comment)?.joined(separator: "\n")
+        let jsonName = try container.decodeIfPresent(String.self, forKey: .name) ?? "Custom"
+        name = Name(rawValue: jsonName)?.title ?? jsonName
         letters = try container.decode([String: String].self, forKey: .letters)
         previous = try container.decodeIfPresent([String: String].self, forKey: .previous)
         next = try container.decodeIfPresent([String: String].self, forKey: .next)
         ending = try container.decodeIfPresent([String: String].self, forKey: .ending)
-        let samplesArray = try container.decodeIfPresent([[String]].self, forKey: .samples) ?? []
-        samples = samplesArray
-            .filter { $0.count == 2 }
-            .map { Sample(source: $0[0], transliteration: $0[1]) }
     }
 }
