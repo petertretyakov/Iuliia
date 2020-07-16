@@ -83,7 +83,7 @@ You can create your own schema JSON file with the following structure:
     }
 }
 ```
-- `name` (*Optional*) — used inly to define your schema.
+- `name` (*Optional*) — readable title for schema. "Custom" by default.
 - `mapping` (**Required**) — Dictionary<Cyrillic letter, Latin representation>. Only one character per key allowed, keys with more than one character will be ommited during transliteration. To define custom transliteration logic for sequence of characters use `prev_mapping`, `next_mapping` and `ending_mapping`.
 - `prev_mapping` (*Optional*) — Dictionary<1 or 2 cyrillic letters, Latin representation>. Mapping for letters with respect to previous sibling. One letter used for transliteration in beginning of words. According to this schema any `е` character in beginning of word or after `а` character will be transliterated to `ye`.
 - `next_mapping` (*Optional*) — Dictionary<2 cyrillic letters, Latin representation>. Mapping for letters with respect to next sibling. According to this schema any `ъ` character before `а` and `и` characters will be transliterated to `y`.
@@ -102,7 +102,7 @@ For example, if you want to transliterate sequence of two cyrillic characters in
 }
 ```
 
-To use your schema with `Iuliia` initialize in with schema URL
+To use your schema with `Iuliia` initialize it with schema URL
 
 ```swift
 let iuliia = try! Iuliia(schemaURL: /path/to/your/custom/schema.json)

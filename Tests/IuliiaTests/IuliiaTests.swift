@@ -12,7 +12,7 @@ import XCTest
 final class IuliiaTests: XCTestCase {
     func testSamples() throws {
         for name in Schema.Name.allCases {
-            let iuliia = try Iuliia(schema: name)
+            let iuliia = try Iuliia(name: name)
 
             let url = Bundle.module.url(forResource: name.rawValue, withExtension: "json")!
             let data = try Data(contentsOf: url, options: .mappedIfSafe)
@@ -20,7 +20,7 @@ final class IuliiaTests: XCTestCase {
             let samples = try decoder.decode(Samples.self, from: data)
 
             for item in samples.items {
-                let result = iuliia.transliterate(item.source)
+                let result = iuliia.translate(item.source)
 
                 print("SCHEMA          : \(iuliia.schema.name)")
                 print("SOURCE          : \(item.source)")
@@ -34,13 +34,13 @@ final class IuliiaTests: XCTestCase {
     }
 
     func testSingleUppercasedLetter() throws {
-        let iuliia = try Iuliia(schema: .gost52290)
-        XCTAssertTrue(iuliia.transliterate("Ё КРЁ МЯКОЁ123") == "YO KRYE MYAKOYO123")
+        let iuliia = try Iuliia(name: .gost52290)
+        XCTAssertTrue(iuliia.translate("Ё КРЁ МЯКОЁ123") == "YO KRYE MYAKOYO123")
     }
 
     func testTabsAndNewlines() throws {
-        let iuliia = try Iuliia(schema: .mosmetro)
-        XCTAssertTrue(iuliia.transliterate("\n\tМосметро\tОдин\n\t") == "\n\tMosmetro\tOdin\n\t")
+        let iuliia = try Iuliia(name: .mosmetro)
+        XCTAssertTrue(iuliia.translate("\n\tМосметро\tОдин\n\t") == "\n\tMosmetro\tOdin\n\t")
     }
 
     static var allTests = [
