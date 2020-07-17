@@ -74,10 +74,11 @@ public class Iuliia {
         let endingTransliterated: String
         if
             let ending = schema.ending,
-            let key = ending.keys.sorted(by: { $0.count > $1.count }).first(where: { word.hasSuffix($0) }),
+            let key = ending.keys.sorted(by: { $0.count > $1.count }).first(where: { word.lowercased().hasSuffix($0) }),
             let match = ending[key]
         {
-            endingTransliterated = match
+            let suffix = word.suffix(key.count)
+            endingTransliterated = suffix.allSatisfy { $0.isUppercase } ? match.uppercased() : match
             lemma = String(word[word.startIndex ..< word.index(word.startIndex, offsetBy: word.count - key.count)])
         } else {
             endingTransliterated = ""
@@ -93,7 +94,8 @@ public class Iuliia {
 
             if element.isUppercase {
                 let nextElement = offset < lemma.count - 1 ? lemma[lemma.index(lemma.startIndex, offsetBy: offset + 1)] : nil
-                if !stringUppercased || nextElement?.unicodeScalars.allSatisfy({ CharacterSet.lowercaseLetters.contains($0) }) ?? false {
+                let nextLowercased = nextElement?.unicodeScalars.allSatisfy({ CharacterSet.lowercaseLetters.contains($0) }) ?? false
+                if (word.count == 1 && !stringUppercased) || nextLowercased {
                     transliterated = transliterated.capitalized
                 } else {
                     transliterated = transliterated.uppercased()

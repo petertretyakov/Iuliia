@@ -43,9 +43,16 @@ final class IuliiaTests: XCTestCase {
         XCTAssertTrue(iuliia.translate("\n\tМосметро\tОдин\n\t") == "\n\tMosmetro\tOdin\n\t")
     }
 
+    func testMixedCases() throws {
+        let iuliia = try Iuliia(name: .mosmetro)
+        XCTAssertTrue(iuliia.translate("БИТЦЕВСКИЙ парк") == "BITSEVSKY park")
+        XCTAssertTrue(iuliia.translate("ЧИСТЫЕ пруды") == "CHISTYE prudy")
+    }
+
     static var allTests = [
         ("testSamples", testSamples),
         ("testSingleUppercasedLetter", testSingleUppercasedLetter),
-        ("testTabsAndNewlines", testTabsAndNewlines)
+        ("testTabsAndNewlines", testTabsAndNewlines),
+        ("testMixedCases", testMixedCases)
     ]
 }
