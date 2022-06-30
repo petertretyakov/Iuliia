@@ -11,7 +11,7 @@ import Foundation
 public class Iuliia {
     public let schema: Schema
 
-    init(schema: Schema) {
+    public init(schema: Schema) {
         self.schema = schema
     }
 
